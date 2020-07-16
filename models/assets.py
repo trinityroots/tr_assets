@@ -67,7 +67,7 @@ class Assets(models.Model):
         string='Promotion'
     )
 
-    asset_image_ids = fields.Many2many('trinityroots.assets.image', 'image_attachment_rel', 'trinityroots_assets_image_id', 'asset_image_id', 'Images')
+    asset_image_ids = fields.One2many(comodel_name='trinityroots.assets.image', inverse_name='owner', string='Images')
 
     asset_description = fields.Html(string='Asset Description')
 
@@ -115,9 +115,12 @@ class AssetsDeeds(models.Model):
     
 class AssetsImage(models.Model):
     _name = "trinityroots.assets.image"
-    _inherits = 'ir.attachment'
+    _inherit = ['ir.attachment']
     _description = 'Assets Image Model'
 
     #image = fields.Binary()
+    #name = fields.Char(string='Image Name')
+    #datas = fields.Binary(string='File')
     is_main = fields.Boolean(string='Is Main Picture')
+    sequence = fields.Integer(string='Sequence')
     owner = fields.Many2one(comodel_name='trinityroots.assets', string='Owner')

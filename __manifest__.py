@@ -28,6 +28,7 @@
         'views/templates.xml',
         'views/assets_color.xml',
         'views/assets_type.xml',
+        'views/assets_image.xml',
     ],
     # only loaded in demonstration mode
     # 'demo': [

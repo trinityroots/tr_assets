@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- trinityroots.assets.image form view -->
+    <record id="trinityroots_assets_image_form_view" model="ir.ui.view">
+        <field name="name">trinityroots.assets.image.view.form</field>
+        <field name="model">trinityroots.assets.image</field>
+        <field name="arch" type="xml">
+            <form string="Add Image">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="datas" />
+                        <field name="is_main" />
+                        <field name="sequence" />
+                        <field name="owner" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

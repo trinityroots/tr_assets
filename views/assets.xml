@@ -58,12 +58,7 @@
                         </page>
                         <page string="Image">
                             <group>
-                                <field name="asset_image_ids">
-                                    <tree default_order="id asc">
-                                        <field name="name" />
-                                        <field name="is_main" />
-                                    </tree>
-                                </field>
+                                <field name="asset_image_ids" />
                             </group>
                         </page>
                     </notebook>
