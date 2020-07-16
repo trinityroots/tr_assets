@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- trinityroots.assets.color tree view -->
+    <record id="assets_color_view_tree" model="ir.ui.view">
+        <field name="name">trinityroots.assets.color.view.tree</field>
+        <field name="model">trinityroots.assets.color</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="name" />
+                <field name="description" />
+                <field name="color_code" />
+                <field name="is_publish" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- trinityroots.assets.color form view -->
+    <record id="assets_color_view_form" model="ir.ui.view">
+        <field name="name">trinityroots.assets.color.view.form</field>
+        <field name="model">trinityroots.assets.color</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="name" />
+                        <field name="description" />
+                        <field name="color_code" />
+                        <field name="is_publish" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- trinityroots.assets.color action window -->
+    <record id="assets_color_list_action" model="ir.actions.act_window">
+        <field name="name">All Assets Color List</field>
+        <field name="res_model">trinityroots.assets.color</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+                Nothing here..
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK --> 
+                Please create a new color!
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="assets_color_menu" name="Assets Color" parent="assets_menu_root" action="assets_color_list_action" />
+
+</odoo>

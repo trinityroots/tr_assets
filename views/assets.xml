@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- trinityroots.assets tree view -->
+    <record id="assets_view_tree" model="ir.ui.view">
+        <field name="name">trinityroots.assets.view.tree</field>
+        <field name="model">trinityroots.assets</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="asset_code" />
+                <field name="asset_type" />
+                <field name="asset_deed_ids" />
+                <field name="asset_address" />
+                <field name="asset_price" />
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- trinityroots.assets form view -->
+    <record id="assets_view_form" model="ir.ui.view">
+        <field name="name">trinityroots.assets.view.form</field>
+        <field name="model">trinityroots.assets</field>
+        <field name="arch" type="xml">
+            <form string="Asets Form">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="asset_code" />
+                        <field name="asset_type" />
+                        <field name="asset_price" />
+                    </group>
+                    <notebook>
+                        <page string="Information">
+                            <group>
+                                <field name="asset_area" />
+                                <field name="asset_road_frontage" />
+                                <field name="asset_color" />
+                                <field name="asset_address" />
+                            </group>
+                            <group>
+                                <field name="asset_description" />
+                                <field name="asset_access" />
+                                <field name="asset_latlong" />
+                            </group>
+                        </page>
+                        <page string="Deeds">
+                            <group>
+                                <field name="asset_total_deed" />
+                                <field name="asset_deed_ids" />
+                            </group>
+                        </page>
+                        <page string="Promotion">
+                            <group>
+                                <field name="asset_promo_toggle" />
+                                <field name="asset_promo" />
+                            </group>
+                        </page>
+                        <page string="Image">
+                            <group>
+                                <field name="asset_image_ids">
+                                    <tree default_order="id asc">
+                                        <field name="name" />
+                                        <field name="is_main" />
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- trinityroots.assets action window -->
+    <record id="assets_list_action" model="ir.actions.act_window">
+        <field name="name">All Assets List</field>
+        <field name="res_model">trinityroots.assets</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+                Nothing here..
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK --> 
+                Please create a new one!
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item will appear in the Upper bar, that's why It needs NO parent or action -->
+    <menuitem id="assets_menu_root" name="Assets" />
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="assets_menu" name="All Assets" parent="assets_menu_root" action="assets_list_action" />
+    
+</odoo>

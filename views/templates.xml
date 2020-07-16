@@ -1,0 +1,237 @@
+<odoo>
+    <data>
+        <!-- all assets layout -->
+        <template id="index">
+            <t t-call="website.layout">
+                <t t-set="title">All Assets</t>
+                <style>
+                    .assets-img {
+                        height: 250px;
+                        -o-object-fit: cover;
+                        object-fit: cover;
+                        overflow: hidden;
+                    }
+
+                    .assets-item {
+                        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                    }
+
+                    .price-row {
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        margin-right: 0px;
+                        margin-left: 0px;
+                    }
+
+                    .price-col {
+                        padding-right: 0px;
+                        padding-left: 0px;
+                    }
+                </style>
+                <div class="oe_structure">
+                    <div class="container mt-5 mb-5">
+                        <div class="row pt-3">
+                            <div class="col">
+                                <h1>All Assets</h1>
+                                <h5>You can find all of our assets here.</h5>
+                            </div>
+                        </div>
+                        <div class="row pt-3 pb-5">
+                            <t t-foreach="all_assets" t-as="assets">
+                                <div class="col-12 my-3">
+                                    <div class="card flex-row flex-wrap assets-item">
+                                        <div class="border-0">
+                                            <img class="card-img-top assets-img" t-att-src="image_data_uri(assets.asset_image_ids[0].datas)"/>
+                                        </div>
+                                        <div class="col p-0">
+                                            <div class="row p-4">
+                                                <div class="col">
+                                                    <h4 class="card-title"><span class="badge badge-secondary">รหัสทรัพย์สิน</span> <t t-esc="assets.asset_code"/></h4>
+                                                    <p class="card-text"><span class="badge badge-secondary">ประเภททรัพย์สิน</span> <t t-esc="assets.asset_type.name"/></p>
+                                                    <p class="card-text"><span class="badge badge-secondary">ที่อยู่</span> <t t-esc="assets.asset_address"/></p>
+                                                    <p class="card-text"><span class="badge badge-secondary">เนื้อที่</span> <t t-esc="assets.asset_area"/></p>
+                                                </div>
+                                            </div>
+                                            <div class="row price-row">
+                                                <div class="col price-col">
+                                                    <a t-attf-href="/assets/{{ slug(assets) }}" class="btn btn-primary btn-lg btn-block" style="border-radius: 0rem !important;">ราคาประกาศขายขั้นต่ำ : <t t-esc="'{:,.2f}'.format(assets.asset_price)"/> บาท</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <t t-call="website.pager">
+                                    <t t-set="_classes">mt-2 ml-md-2</t>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <!-- view assets layout -->
+        <template id="view_assets">
+            <t t-call="website.layout">
+                <t t-set="title">View Assets</t>
+                <style>
+                    #assets_gallery .list-inline {
+                        white-space:nowrap;
+                        overflow-x:auto;
+                    }
+                    
+                    #assets_gallery .carousel-indicators {
+                        position: static;
+                        left: initial;
+                        width: initial;
+                        margin-left: initial;
+                    }
+                    
+                    #assets_gallery .carousel-indicators > li {
+                        width: initial;
+                        height: initial;
+                        text-indent: initial;
+                    }
+                    
+                    #assets_gallery .carousel-indicators > li.active img {
+                        opacity: 0.7;
+                    }
+
+                    .img-thumbnail {
+                        max-width: 80px;
+                    }
+
+                    .carousel-item {
+                        text-align: center;
+                      }
+                      
+                    .parent {
+                        min-height: 200px;
+                    }
+                      
+                    .carousel-item img {
+                        display: block;
+                        margin: auto;
+                    }
+                    
+                </style>
+                <div class="oe_structure">
+                    <div class="container mt-5 mb-5">
+                        <div class="row">
+                            <h1>ทรัพย์สิน รหัส <t t-esc="assets.asset_code" /></h1>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="assets_gallery" class="carousel slide shadow">
+                                    <!-- main slider carousel items -->
+                                    <div class="carousel-inner">
+                                        <t t-set="image_count" t-value="0"/>
+                                        <t t-foreach="assets.asset_image_ids" t-as="asset_image">
+                                            <t t-if="image_count == 0">
+                                                <div class="active carousel-item" t-attf-data-slide-number="{{image_count}}">
+                                                    <img t-att-src="image_data_uri(asset_image.datas)" class="img-fluid" />
+                                                </div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="carousel-item" t-attf-data-slide-number="{{image_count}}">
+                                                    <img t-att-src="image_data_uri(asset_image.datas)" class="img-fluid" />
+                                                </div>
+                                            </t>
+                                            <t t-set="image_count" t-value="image_count+1"/>
+                                        </t>
+
+                                        <a class="carousel-control-prev" href="#assets_gallery" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#assets_gallery" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                    
+                                    </div>
+                                    <!-- main slider carousel nav controls -->
+                    
+                    
+                                    <ul class="carousel-indicators list-inline mx-auto border px-2">
+                                        <t t-set="image_count" t-value="0"/>
+                                        <t t-foreach="assets.asset_image_ids" t-as="asset_image">
+                                            <t t-if="image_count == 0">
+                                                <li class="list-inline-item active">
+                                                    <a t-attf-id="carousel-selector-{{image_count}}" class="selected" t-attf-data-slide-to="{{image_count}}" data-target="#assets_gallery">
+                                                        <img t-att-src="image_data_uri(asset_image.datas)" class="img-fluid img-thumbnail" />
+                                                    </a>
+                                                </li>
+                                            </t>
+                                            <t t-else="">
+                                                <li class="list-inline-item">
+                                                    <a t-attf-id="carousel-selector-{{image_count}}" class="selected" t-attf-data-slide-to="{{image_count}}" data-target="#assets_gallery">
+                                                        <img t-att-src="image_data_uri(asset_image.datas)" class="img-fluid img-thumbnail" />
+                                                    </a>
+                                                </li>
+                                            </t>
+                                            <t t-set="image_count" t-value="image_count+1"/>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h1><span class="badge badge-secondary">รหัสทรัพย์สิน :</span> <t t-esc="assets.asset_code" /></h1>
+                                <p><span class="badge badge-secondary">ประเภททรัพย์สิน :</span> <t t-esc="assets.asset_type.name" /></p>
+                                <p><span class="badge badge-secondary">โฉนดที่ดิน :</span> <span t-foreach="assets.asset_deed_ids" t-as="asset_deed"><t t-esc="asset_deed.name" />, </span></p>
+                                <p><span class="badge badge-secondary">จำนวนเอกสารสิทธิ์ :</span> <t t-esc="assets.asset_total_deed" /></p>
+                                <p><span class="badge badge-secondary">เนื้อที่ :</span> <t t-esc="assets.asset_area" /></p>
+                                <p><span class="badge badge-secondary">ที่ตั้ง :</span> <t t-esc="assets.asset_address" /></p>
+                                <p><span class="badge badge-secondary">เขตพื้นที่ (สี) :</span> <t t-esc="assets.asset_color.name" /></p>
+                                <p><span class="badge badge-secondary">หน้ากว้างติดถนน :</span> <t t-esc="assets.asset_road_frontage" /></p>
+
+                                <a class="btn btn-success btn-lg btn-block" href="#" role="button">ราคาประกาศขายขั้นต่ำ <t t-esc="'{:,.2f}'.format(assets.asset_price)" /> บาท</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="map" style="width: 100%; height:400px;"></div>
+                                <script>
+                                    function initMap() {
+                                      var uluru = {lat: <t t-esc="assets.asset_latlong.split(',')[0]" />, lng: <t t-esc="assets.asset_latlong.split(',')[1]" />};
+                                      var map = new google.maps.Map(
+                                          document.getElementById('map'), {zoom: 18, center: uluru});
+                                      var marker = new google.maps.Marker({position: uluru, map: map});
+                                    }
+                                </script>
+                                <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtb-QS_hM_Zq4MTRLSRpZ2gaWnkR9iYgQ&amp;callback=initMap"></script>
+                                <a class="btn btn-info btn-lg btn-block my-2" t-attf-href="https://www.google.com/maps/dir//{{assets.asset_latlong}}/" target="_blank" role="button">เปิดใน Google Maps</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <ul class="nav nav-tabs my-2" id="informationTab" role="tablist">
+                                    <li class="nav-item">
+                                      <a class="nav-link active" id="access-tab" data-toggle="tab" href="#access" role="tab" aria-controls="access" aria-selected="true">การเข้าถึง</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="false">รายละเอียดทรัพย์สิน</a>
+                                    </li>
+                                  </ul>
+                                  <div class="tab-content" id="informationTabContent">
+                                    <div class="tab-pane fade show active p-2" id="access" role="tabpanel" aria-labelledby="access-tab">
+                                        <p><t t-esc="assets.asset_access" /></p>
+                                    </div>
+                                    <div class="tab-pane fade p-2" id="details" role="tabpanel" aria-labelledby="details-tab">
+                                        <div t-field="assets.asset_description" />
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
