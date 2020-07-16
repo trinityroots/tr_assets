@@ -118,9 +118,10 @@ class AssetsImage(models.Model):
     _inherit = ['ir.attachment']
     _description = 'Assets Image Model'
 
-    #image = fields.Binary()
-    #name = fields.Char(string='Image Name')
-    #datas = fields.Binary(string='File')
+    #TODO when is_main is true -> sequence force as 0
+    #TODO sequence is not duplicate
+    #TODO preview image as in form view (use widget and sort sequence?)
+
     is_main = fields.Boolean(string='Is Main Picture')
     sequence = fields.Integer(string='Sequence')
     owner = fields.Many2one(comodel_name='trinityroots.assets', string='Owner')
