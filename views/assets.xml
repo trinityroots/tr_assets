@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
     <!-- trinityroots.assets tree view -->
     <record id="assets_view_tree" model="ir.ui.view">
         <field name="name">trinityroots.assets.view.tree</field>
@@ -47,7 +48,7 @@
                         <page string="Deeds">
                             <group>
                                 <field name="asset_total_deed" />
-                                <field name="asset_deed_ids" />
+                                <field name="asset_deed_ids" widget="many2many" />
                             </group>
                         </page>
                         <page string="Promotion">
@@ -58,7 +59,14 @@
                         </page>
                         <page string="Image">
                             <group>
-                                <field name="asset_image_ids" />
+                                <field name="asset_image_ids">
+                                    <tree class="images_tree" editable="bottom">
+                                        <field name="name"/>
+                                        <field name="datas" />
+                                        <field name="is_main" />
+                                        <field name="sequence" />
+                                    </tree>
+                                </field>
                             </group>
                         </page>
                     </notebook>

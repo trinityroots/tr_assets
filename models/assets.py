@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -10,10 +11,36 @@ class Assets(models.Model):
     _description="This module is for managing assets"
     _rec_name="asset_code"
 
-    @api.onchange('asset_deed_ids')
+
+    @api.depends('asset_deed_ids')
     def _count_total_deeds(self):
         for rec in self:
-            rec.asset_total_deed = rec.asset_deed_ids.search_count([('assets_owner','=',self.id)])
+            count = 0
+            for line in self.asset_deed_ids:
+                count += 1
+            self.asset_total_deed = count
+
+    @api.onchange('asset_image_ids')
+    def _check_duplicate_sequence(self):
+        for rec in self:
+            existing = []
+            for line in rec.asset_image_ids:
+                if line.sequence in existing:
+                    raise ValidationError('Sequence should be unique')
+                existing.append(line.sequence)
+                _logger.warning(line)
+            _logger.warning(rec)
+
+    @api.onchange('asset_image_ids')
+    def _check_multi_main_img(self):
+        for rec in self:
+            existing = False
+            for line in rec.asset_image_ids:
+                if line.is_main is True:
+                    if existing is True:
+                        raise ValidationError('Main image should have only one')
+                    else:
+                        existing = True
 
     #fields
     asset_code = fields.Char(
@@ -103,6 +130,9 @@ class AssetsType(models.Model):
     _name = 'trinityroots.assets.type'
     _description = 'Assets Type Model'
 
+    def checkType(self, x):
+        return str(type(x))
+
     name = fields.Char(string='Type')
 
 class AssetsDeeds(models.Model):
@@ -115,13 +145,20 @@ class AssetsDeeds(models.Model):
     
 class AssetsImage(models.Model):
     _name = "trinityroots.assets.image"
-    _inherit = ['ir.attachment']
     _description = 'Assets Image Model'
+    _order = "sequence asc"
 
     #TODO when is_main is true -> sequence force as 0
     #TODO sequence is not duplicate
     #TODO preview image as in form view (use widget and sort sequence?)
 
+    @api.onchange('is_main')
+    def _main_image_at_zero(self):
+        if self.is_main is True:
+            self.sequence = 1
+
+    name = fields.Char(name="Image name")
+    datas = fields.Binary(string='Image Data')
     is_main = fields.Boolean(string='Is Main Picture')
     sequence = fields.Integer(string='Sequence')
     owner = fields.Many2one(comodel_name='trinityroots.assets', string='Owner')

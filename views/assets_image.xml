@@ -9,13 +9,48 @@
                 <sheet>
                     <group>
                         <!-- Add your fields here -->
-                        <field name="datas" />
+                        <field name="name" />
+                        <field name="datas" widget="image" />
                         <field name="is_main" />
-                        <field name="sequence" />
+                        <field name="sequence" attrs="{'readonly':[('is_main','=',True)]}" />
                         <field name="owner" />
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
+
+    <!-- trinityroots.assets.image tree view -->
+    <record id="assets_image_view_tree" model="ir.ui.view">
+        <field name="name">trinityroots.assets.image.view.tree</field>
+        <field name="model">trinityroots.assets.image</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="name" />
+                <field name="is_main" />
+                <field name="sequence" />
+                <field name="owner" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- trinityroots.assets.color action window -->
+    <record id="assets_img_list_action" model="ir.actions.act_window">
+        <field name="name">All Assets Images List</field>
+        <field name="res_model">trinityroots.assets.image</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+                Nothing here..
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK --> 
+                Please create a new color!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="assets_image_menu" name="Assets Images" parent="assets_menu_root" action="assets_img_list_action" />
 </odoo>
