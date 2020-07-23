@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+from odoo.addons.website.models.website import slugify
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -10,6 +11,13 @@ class Assets(models.Model):
     _name="trinityroots.assets"
     _description="This module is for managing assets"
     _rec_name="asset_code"
+
+    def open_content_url(self):
+        return {'name': 'View on website',
+                'res_model': 'ir.actions.act_url',
+                'type': 'ir.actions.act_url',
+                'url': 'assets/'+slugify(self)
+                }
 
 
     @api.depends('asset_deed_ids')
@@ -103,6 +111,8 @@ class Assets(models.Model):
     )
 
     asset_latlong = fields.Char(string="GPS Location")
+
+    asset_map_img = fields.Binary(string="Map Image")
     
 class AssetsColor(models.Model):
     _name="trinityroots.assets.color"

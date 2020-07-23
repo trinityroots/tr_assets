@@ -29,6 +29,7 @@
         'views/assets_color.xml',
         'views/assets_type.xml',
         'views/assets_image.xml',
+        'views/geological.xml',
     ],
     # only loaded in demonstration mode
     # 'demo': [

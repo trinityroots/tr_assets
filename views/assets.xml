@@ -24,6 +24,9 @@
         <field name="model">trinityroots.assets</field>
         <field name="arch" type="xml">
             <form string="Asets Form">
+                <header>
+                    <button name="open_content_url" string="View on website" type="object" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <group>
                         <!-- Add your fields here -->
@@ -59,6 +62,7 @@
                         </page>
                         <page string="Image">
                             <group>
+                                <field name="asset_map_img" widget="image"/>
                                 <field name="asset_image_ids">
                                     <tree class="images_tree" editable="bottom">
                                         <field name="name"/>

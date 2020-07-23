@@ -4,3 +4,5 @@ access_assets_color,model_trinityroots_assets_color,model_trinityroots_assets_co
 access_assets_type,model_trinityroots_assets_type,model_trinityroots_assets_type,,1,1,1,1
 access_assets_deed,model_trinityroots_assets_deed,model_trinityroots_assets_deed,,1,1,1,1
 access_assets_image,model_trinityroots_assets_image,model_trinityroots_assets_image,,1,1,1,1
+access_assets_province,access_assets_province,model_trinityroots_assets_province,,1,1,1,1
+access_assets_amphoe,access_assets_amphoe,model_trinityroots_assets_amphoe,,1,1,1,1

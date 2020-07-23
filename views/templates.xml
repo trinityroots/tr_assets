@@ -44,7 +44,7 @@
                                   <h5 class="card-title">Search Assets</h5>
                                   <h6 class="card-subtitle mb-3 text-muted">You can put your search keyword below</h6>
                                   <form class="form-inline" method="POST" t-attf-action="/assets/search">
-                                      <div class="col-7">
+                                      <div class="col-3">
                                           <label for="keyword" style="justify-content: start;">Keyword : </label>
                                           <input type="text" class="form-control" id="keyword" name="keyword" value="" style="width:100%" />
                                       </div>
@@ -56,6 +56,21 @@
                                                   <option t-att-value="type.id"><t t-esc="type.name" /></option>
                                               </t>
                                           </select>
+                                      </div>
+                                      <div class="col-2">
+                                        <label for="category" style="justify-content: start;">Province : </label>
+                                        <select id="province" class="form-control" name="province" style="width:100%" onchange="getAmphoe()">
+                                            <option value="all">All</option>
+                                            <t t-foreach="all_province" t-as="province">
+                                                <option t-att-value="province.id"><t t-esc="province.name" /></option>
+                                            </t>
+                                        </select>
+                                      </div>
+                                      <div class="col-2">
+                                        <label for="category" style="justify-content: start;">Amphoe : </label>
+                                        <select id="amphoe" class="form-control" name="amphoe" style="width:100%">
+                                            <option value="all">All</option>
+                                        </select>
                                       </div>
                                       <div class="col">
                                           <button type="submit" class="btn btn-primary btn-lg btn-block">Search</button>
@@ -98,6 +113,15 @@
                                 </t>
                             </div>
                         </div>
+                        <script>
+                            function getAmphoe() {
+                                let selected_province = document.getElementById("province").value;
+                                $.post("/api", {province_id: selected_province, csrf_token: '<t t-esc="request.csrf_token()" />'}, function(result){
+                                    //console.log(result);
+                                    document.getElementById("amphoe").innerHTML = result;
+                                });
+                            }
+                        </script>
                     </div>
                 </div>
             </t>
@@ -130,7 +154,7 @@
                         opacity: 0.7;
                     }
 
-                    .img-thumbnail {
+                    .img-slider-thumbnail {
                         max-width: 80px;
                     }
 
@@ -146,6 +170,19 @@
                         display: block;
                         margin: auto;
                     }
+
+                    .tab-pane {
+
+                        border-left: 1px solid #ddd;
+                        border-right: 1px solid #ddd;
+                        border-bottom: 1px solid #ddd;
+                        border-radius: 0px 0px 5px 5px;
+                        padding: 10px;
+                    }
+                    
+                    .nav-tabs {
+                        margin-bottom: 0;
+                    }
                     
                 </style>
                 <div class="oe_structure">
@@ -153,7 +190,7 @@
                         <div class="row">
                             <h1>ทรัพย์สิน รหัส <t t-esc="assets.asset_code" /></h1>
                         </div>
-                        <div class="row">
+                        <div class="row my-3">
                             <div class="col">
                                 <div id="assets_gallery" class="carousel slide shadow">
                                     <!-- main slider carousel items -->
@@ -192,14 +229,14 @@
                                             <t t-if="image_count == 0">
                                                 <li class="list-inline-item active">
                                                     <a t-attf-id="carousel-selector-{{image_count}}" class="selected" t-attf-data-slide-to="{{image_count}}" data-target="#assets_gallery">
-                                                        <img t-att-src="image_data_uri(asset_image.datas)" class="img-fluid img-thumbnail" />
+                                                        <img t-att-src="image_data_uri(asset_image.datas)" class="img-fluid img-thumbnail img-slider-thumbnail" />
                                                     </a>
                                                 </li>
                                             </t>
                                             <t t-else="">
                                                 <li class="list-inline-item">
                                                     <a t-attf-id="carousel-selector-{{image_count}}" class="selected" t-attf-data-slide-to="{{image_count}}" data-target="#assets_gallery">
-                                                        <img t-att-src="image_data_uri(asset_image.datas)" class="img-fluid img-thumbnail" />
+                                                        <img t-att-src="image_data_uri(asset_image.datas)" class="img-fluid img-thumbnail img-slider-thumbnail" />
                                                     </a>
                                                 </li>
                                             </t>
@@ -221,24 +258,14 @@
                                 <a class="btn btn-success btn-lg btn-block" href="#" role="button">ราคาประกาศขายขั้นต่ำ <t t-esc="'{:,.2f}'.format(assets.asset_price)" /> บาท</a>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row my-3">
                             <div class="col">
-                                <div id="map" style="width: 100%; height:400px;"></div>
-                                <script>
-                                    function initMap() {
-                                      var uluru = {lat: <t t-esc="assets.asset_latlong.split(',')[0]" />, lng: <t t-esc="assets.asset_latlong.split(',')[1]" />};
-                                      var map = new google.maps.Map(
-                                          document.getElementById('map'), {zoom: 18, center: uluru});
-                                      var marker = new google.maps.Marker({position: uluru, map: map});
-                                    }
-                                </script>
-                                <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtb-QS_hM_Zq4MTRLSRpZ2gaWnkR9iYgQ&amp;callback=initMap"></script>
-                                <a class="btn btn-info btn-lg btn-block my-2" t-attf-href="https://www.google.com/maps/dir//{{assets.asset_latlong}}/" target="_blank" role="button">เปิดใน Google Maps</a>
+                                <t t-if="assets.asset_map_img">
+                                    <img t-att-src="image_data_uri(assets.asset_map_img)" class="img-fluid img-thumbnail" />
+                                </t>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col">
-                                <ul class="nav nav-tabs my-2" id="informationTab" role="tablist">
+                                <ul class="nav nav-tabs" id="informationTab" role="tablist">
                                     <li class="nav-item">
                                       <a class="nav-link active" id="access-tab" data-toggle="tab" href="#access" role="tab" aria-controls="access" aria-selected="true">การเข้าถึง</a>
                                     </li>
@@ -254,6 +281,22 @@
                                         <div t-field="assets.asset_description" />
                                     </div>
                                   </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="map" style="width: 100%; height:400px;"></div>
+                                <script>
+                                    function initMap() {
+                                      var uluru = {lat: <t t-esc="assets.asset_latlong.split(',')[0]" />, lng: <t t-esc="assets.asset_latlong.split(',')[1]" />};
+                                      var map = new google.maps.Map(
+                                          document.getElementById('map'), {zoom: 18, center: uluru});
+                                      var marker = new google.maps.Marker({position: uluru, map: map});
+                                    }
+                                </script>
+                                <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtb-QS_hM_Zq4MTRLSRpZ2gaWnkR9iYgQ&amp;callback=initMap"></script>
+                                <a class="btn btn-info btn-lg btn-block my-2" t-attf-href="https://www.google.com/maps/place/{{assets.asset_latlong}}/" target="_blank" role="button">เปิดใน Google Maps</a>
+                                <a class="btn btn-secondary btn-lg btn-block my-2" t-attf-href="https://www.google.com/maps/dir/{{assets.asset_latlong}}/" target="_blank" role="button">นำทางบน Google Maps</a>
                             </div>
                         </div>
                     </div>
@@ -304,7 +347,7 @@
                                   <h5 class="card-title">Search Assets</h5>
                                   <h6 class="card-subtitle mb-3 text-muted">You can put your search keyword below</h6>
                                   <form class="form-inline" method="POST" t-attf-action="/assets/search">
-                                      <div class="col-7">
+                                      <div class="col-3">
                                           <label for="keyword" style="justify-content: start;">Keyword : </label>
                                           <input type="text" class="form-control" id="keyword" name="keyword" t-att-value="keyword" style="width:100%" />
                                       </div>
@@ -317,6 +360,26 @@
                                                     <option t-else="" t-att-value="asset_type.id"><t t-esc="asset_type.name" /></option>
                                               </t>
                                           </select>
+                                      </div>
+                                      <div class="col-2">
+                                        <label for="category" style="justify-content: start;">Province : </label>
+                                        <select id="province" class="form-control" name="province" style="width:100%" onchange="getAmphoe()">
+                                            <option value="all">All</option>
+                                            <t t-foreach="all_province" t-as="province">
+                                                <option t-if="province.id == selected_province" t-att-value="province.id" selected=""><t t-esc="province.name" /></option>
+                                                <option t-else="" t-att-value="province.id"><t t-esc="province.name" /></option>
+                                            </t>
+                                        </select>
+                                      </div>
+                                      <div class="col-2">
+                                        <label for="category" style="justify-content: start;">Amphoe : </label>
+                                        <select id="amphoe" class="form-control" name="amphoe" style="width:100%">
+                                            <option value="all">All</option>
+                                            <t t-foreach="all_amphoe" t-as="amphoe">
+                                                <option t-if="amphoe.id == selected_amphoe" t-att-value="amphoe.id" selected=""><t t-esc="amphoe.name" /></option>
+                                                <option t-else="" t-att-value="amphoe.id"><t t-esc="amphoe.name" /></option>
+                                            </t>
+                                        </select>
                                       </div>
                                       <div class="col">
                                           <button type="submit" class="btn btn-primary btn-lg btn-block">Search</button>
@@ -352,6 +415,15 @@
                                 </div>
                             </t>
                         </div>
+                        <script>
+                            function getAmphoe() {
+                                let selected_province = document.getElementById("province").value;
+                                $.post("/api", {province_id: selected_province, csrf_token: '<t t-esc="request.csrf_token()" />'}, function(result){
+                                    //console.log(result);
+                                    document.getElementById("amphoe").innerHTML = result;
+                                });
+                            }
+                        </script>
                         <!-- <div class="row">
                             <div class="col">
                                 <t t-call="website.pager">

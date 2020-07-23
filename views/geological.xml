@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- trinityroots.assets.province tree view -->
+    <record id="trinityroots_assets_province_view_tree" model="ir.ui.view">
+        <field name="name">trinityroots.assets.province.view.tree</field>
+        <field name="model">trinityroots.assets.province</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- trinityroots.assets.province form view -->
+    <record id="trinityroots_assets_province_view_form" model="ir.ui.view">
+        <field name="name">trinityroots.assets.province.view.form</field>
+        <field name="model">trinityroots.assets.province</field>
+        <field name="arch" type="xml">
+            <form string="Province Form">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="name" />
+                        <field name="total_amphoe" />
+                        <field name="amphoe_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- trinityroots.assets.province action window -->
+    <record id="province_list_action" model="ir.actions.act_window">
+        <field name="name">All Province List</field>
+        <field name="res_model">trinityroots.assets.province</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+                Nothing here..
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK --> 
+                Please create a new one!
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="assets_province_menu" name="All Province" parent="assets_menu_root" action="province_list_action" />
+
+    <!-- trinityroots.assets.amphoe tree view -->
+    <record id="trinityroots_assets_amphoe_view_tree" model="ir.ui.view">
+        <field name="name">trinityroots.assets.amphoe.view.tree</field>
+        <field name="model">trinityroots.assets.amphoe</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="name" />
+                <field name="zip_code" />
+                <field name="province" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- trinityroots.assets.amphoe form view -->
+    <record id="trinityroots_assets_amphoe_view_form" model="ir.ui.view">
+        <field name="name">trinityroots.assets.amphoe.view.form</field>
+        <field name="model">trinityroots.assets.amphoe</field>
+        <field name="arch" type="xml">
+            <form string="amphoe Form">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="name" />
+                        <field name="zip_code" />
+                        <field name="province" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- trinityroots.assets.amphoe action window -->
+    <record id="amphoe_list_action" model="ir.actions.act_window">
+        <field name="name">All Amphoe List</field>
+        <field name="res_model">trinityroots.assets.amphoe</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+                Nothing here..
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK --> 
+                Please create a new one!
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="assets_amphoe_menu" name="All Amphoe" parent="assets_menu_root" action="amphoe_list_action" />
+
+</odoo>
