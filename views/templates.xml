@@ -78,6 +78,7 @@
                                       <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                   </form>
                               </div>
+                              <a href="assets/searchbymap" class="btn btn-primary btn-lg btn-block" >ค้นหาด้วยแผนที่</a>
                             </div>
                         </div>
                         <div class="row pt-3 pb-5">
@@ -387,6 +388,7 @@
                                       <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                   </form>
                               </div>
+                              <a href="assets/searchbymap" class="btn btn-primary btn-lg btn-block" >ค้นหาด้วยแผนที่</a>
                             </div>
                         </div>
                         <div class="row pt-3 pb-5">
@@ -431,6 +433,57 @@
                                 </t>
                             </div>
                         </div> -->
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <!-- search by maps layout -->
+        <template id="search_by_maps">
+            <t t-call="website.layout">
+                <t t-set="title">Assets Search By Maps</t>
+                <style>
+                    .assets-img {
+                        height: 250px;
+                        -o-object-fit: cover;
+                        object-fit: cover;
+                        overflow: hidden;
+                    }
+
+                    .assets-item {
+                        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                    }
+
+                    .price-row {
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        margin-right: 0px;
+                        margin-left: 0px;
+                    }
+
+                    .price-col {
+                        padding-right: 0px;
+                        padding-left: 0px;
+                    }
+                </style>
+                <div class="oe_structure">
+                    <div class="container mt-5 mb-5">
+                        <div class="row pt-3">
+                            <div class="col">
+                                <h1>Assets Search By Maps</h1>
+                            </div>
+                        </div>
+                        <div class="row py-3">
+                            <div class="col">
+                                <div id="map" style="width: 100%; height: 400px"></div>
+                                <script type="text/javascript" src="/tr_assets/static/src/js/searchbymaps.js"></script>
+                                <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtb-QS_hM_Zq4MTRLSRpZ2gaWnkR9iYgQ&amp;callback=initMap"></script>
+                            </div>
+                        </div>
+                        <div class="row py-3" id="assets_list">
+                        </div>
                     </div>
                 </div>
             </t>
