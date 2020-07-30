@@ -1,0 +1,23 @@
+<odoo>
+
+        <record id="assets_categ" model="ir.module.category">
+            <field name="name">Assets</field>
+        </record>
+
+        <record id="assets_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="assets_categ" />
+        </record>
+
+        <record id="assets_admin_see_all_rule" model="ir.rule">
+            <field name="name">Assets Administrator Can See All Assets</field>
+            <field name="model_id" ref="model_trinityroots_assets" />
+            <field name="groups" eval="[(4,ref('assets_admin'))]" />
+            <field name="perm_read" eval="1" />
+            <field name="perm_write" eval="1" />
+            <field name="perm_create" eval="1" />
+            <field name="perm_unlink" eval="1" />
+            <field name="domain_force">[]</field>
+        </record>
+
+</odoo>

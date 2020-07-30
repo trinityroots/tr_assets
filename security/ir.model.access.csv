@@ -1,8 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_assets,model_trinityroots_assets,model_trinityroots_assets,,1,1,1,1
-access_assets_color,model_trinityroots_assets_color,model_trinityroots_assets_color,,1,1,1,1
-access_assets_type,model_trinityroots_assets_type,model_trinityroots_assets_type,,1,1,1,1
-access_assets_deed,model_trinityroots_assets_deed,model_trinityroots_assets_deed,,1,1,1,1
-access_assets_image,model_trinityroots_assets_image,model_trinityroots_assets_image,,1,1,1,1
-access_assets_province,access_assets_province,model_trinityroots_assets_province,,1,1,1,1
-access_assets_amphoe,access_assets_amphoe,model_trinityroots_assets_amphoe,,1,1,1,1
+access_assets,access_assets,tr_assets.model_trinityroots_assets,assets_admin,1,1,1,1
+access_assets_color,access_assets_color,tr_assets.model_trinityroots_assets_color,assets_admin,1,1,1,1
+access_assets_type,access_assets_type,tr_assets.model_trinityroots_assets_type,assets_admin,1,1,1,1
+access_assets_deed,access_assets_deed,tr_assets.model_trinityroots_assets_deed,assets_admin,1,1,1,1
+access_assets_image,access_assets_image,tr_assets.model_trinityroots_assets_image,assets_admin,1,1,1,1
+access_assets_province,access_assets_province,tr_assets.model_trinityroots_assets_province,assets_admin,1,1,1,1
+access_assets_amphoe,access_assets_amphoe,tr_assets.model_trinityroots_assets_amphoe,assets_admin,1,1,1,1

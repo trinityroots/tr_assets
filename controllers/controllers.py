@@ -101,12 +101,12 @@ class Assets(http.Controller):
         markers = etree.Element('markers')
         # 0 = id | 1 = code | 2 = type | 3 = address | 4 = area | 5 = latlong
         for res in request.cr.fetchall():
-            _logger.warning(res[0])
+            #_logger.warning(res[0])
             latlong = res[5].split(",")
             image = http.request.env['trinityroots.assets.image'].search([('owner','=',res[0]), ('is_main','=','true')])
             #_logger.warning(image.datas)
-            asset_type = http.request.env['trinityroots.assets.type'].search([('id','=',res[2])]).name
+            asset_type = http.request.env['trinityroots.assets.type'].browse([res[2]]).name
             markers.append(etree.Element('marker', id=str(res[0]), asset_code=res[1], asset_type=asset_type, asset_address=res[3], asset_area=res[4], lat=latlong[0], lng=latlong[1], asset_img=image.datas))
-            _logger.warning("==================")
+            #_logger.warning("==================")
         s = etree.tostring(markers, xml_declaration=True, encoding='utf-8')
         return http.request.make_response(s, headers=[('Content-Type', 'text/xml;charset=UTF-8')])
