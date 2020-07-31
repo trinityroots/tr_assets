@@ -3,6 +3,7 @@ from odoo import http
 from odoo.http import request
 import logging
 from lxml import etree
+import re
 
 _logger = logging.getLogger(__name__)
 
@@ -27,8 +28,28 @@ class Assets(http.Controller):
 
     @http.route('/assets/<model("trinityroots.assets"):assets>/', auth='public', website=True)
     def read_news(self, assets):
+        district = assets.get_district(assets.asset_address)[1]
+        province = assets.get_province(assets.asset_address)
+        _logger.warning(district)
+        _logger.warning(province)
+        recommend_assets = None
+        if district != '':
+            recommend_assets = http.request.env['trinityroots.assets'].search([('asset_address','ilike',district),('id','!=',assets.id)], limit=3)
+        if province != '':
+            if recommend_assets is None:
+                recommend_assets = http.request.env['trinityroots.assets'].search([('asset_address','ilike',province),('id','!=',assets.id)], limit=3)
+            elif len(recommend_assets) < 3:
+                recommend_assets += http.request.env['trinityroots.assets'].search([('asset_address','ilike',province),('id','!=',assets.id)], limit=(3-len(recommend_assets)))
+        if recommend_assets is None:
+            recommend_assets += http.request.env['trinityroots.assets'].search([('asset_type','=',assets.asset_type.id),('id','!=',assets.id)], limit=3)
+        if len(recommend_assets) < 3:
+            recommend_assets += http.request.env['trinityroots.assets'].search([('asset_type','=',assets.asset_type.id),('id','!=',assets.id)], limit=(3-len(recommend_assets)))
+        if len(recommend_assets) < 3:
+            recommend_assets += http.request.env['trinityroots.assets'].search([('id','!=',assets.id)], limit=(3-len(recommend_assets)))
+        _logger.warning(recommend_assets)
         return http.request.render('tr_assets.view_assets', {
-            'assets': assets
+            'assets': assets,
+            'recommend_assets': recommend_assets
         })
 
     @http.route('/assets/search/', auth='public', website=True)
@@ -50,6 +71,8 @@ class Assets(http.Controller):
 
         search_domain = []
         if keyword != '':
+            search_domain.append('|')
+            search_domain.append(('asset_code','ilike',keyword))
             search_domain.append(('asset_address','ilike',keyword))
         if asset_type != 'all':
             search_domain.append(('asset_type.id','=',asset_type))
@@ -61,7 +84,7 @@ class Assets(http.Controller):
         if amphoe != 'all':
             #search_domain.pop()
             amphoe = http.request.env['trinityroots.assets.amphoe'].browse([int(amphoe)])
-            search_domain.append(('asset_address','ilike',amphoe.name[3:]))
+            search_domain.append(('asset_address','ilike',amphoe.name.replace('เขต', '').replace('อำเภอ', '')))
         
         assets_search = assets.search(search_domain)
         return_obj.update({'all_results': assets_search})

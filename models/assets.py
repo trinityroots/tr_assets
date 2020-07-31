@@ -4,6 +4,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from odoo.addons.website.models.website import slugify
 import logging
+import re
 
 _logger = logging.getLogger(__name__)
 
@@ -18,6 +19,14 @@ class Assets(models.Model):
                 'type': 'ir.actions.act_url',
                 'url': 'assets/'+slugify(self)
                 }
+
+    def get_province(self, address):
+        re_province = re.search("(จังหวัด) ([ก-๙]+)", address)
+        return re_province.group(2) if re_province is not None else ''
+
+    def get_district(self, address):
+        re_district = re.search("(เขต|อำเภอ) ([ก-๙]+)", address)
+        return [re_district.group(1), re_district.group(2)] if re_district is not None else ''
 
 
     @api.depends('asset_deed_ids')

@@ -98,7 +98,7 @@
                  </div>
                  <div class="row price-row">
                      <div class="col price-col">
-                         <a t-attf-href="/assets/${id}" class="btn btn-primary btn-lg btn-block" style="border-radius: 0rem !important; color:white;">รายละเอียดเพิ่มเติม</a>
+                         <a href="/assets/${id}" class="btn btn-primary btn-lg btn-block" style="border-radius: 0rem !important; color:white;">รายละเอียดเพิ่มเติม</a>
                      </div>
                  </div>
              </div>

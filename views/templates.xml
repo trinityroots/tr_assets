@@ -1,15 +1,32 @@
 <odoo>
     <data>
+        <template id="custom_css_assets" inherit_id="website.assets_frontend">
+            <xpath expr="." position="inside">
+                  <link href="https://fonts.googleapis.com/css2?family=Mitr&amp;family=Prompt&amp;display=swap" rel="stylesheet" />
+                  <style>
+                    main, h1, h2, h3, h4, h5, h6 {
+                        font-family: 'Prompt', sans-serif !important;
+                    }
+
+                    .font08rem {
+                        font-size:0.8rem;
+                    }
+                  </style>
+              </xpath>
+        </template>
+
         <!-- all assets layout -->
         <template id="index">
             <t t-call="website.layout">
                 <t t-set="title">All Assets</t>
                 <style>
                     .assets-img {
+                        width: 100%;
                         height: 250px;
                         -o-object-fit: cover;
                         object-fit: cover;
                         overflow: hidden;
+                        border-radius: 0.25rem 0 0 0.25rem;
                     }
 
                     .assets-item {
@@ -29,6 +46,7 @@
                         padding-right: 0px;
                         padding-left: 0px;
                     }
+                    
                 </style>
                 <div class="oe_structure">
                     <div class="container mt-5 mb-5">
@@ -86,20 +104,20 @@
                                 <div class="col-12 my-3">
                                     <div class="card flex-row flex-wrap assets-item">
                                         <div class="border-0">
-                                            <img class="card-img-top assets-img" t-att-src="image_data_uri(assets.asset_image_ids[0].datas)"/>
+                                            <img class="assets-img" t-att-src="image_data_uri(assets.asset_image_ids[0].datas)"/>
                                         </div>
                                         <div class="col p-0">
                                             <div class="row p-4">
                                                 <div class="col">
                                                     <h4 class="card-title"><span class="badge badge-secondary">รหัสทรัพย์สิน</span> <t t-esc="assets.asset_code"/></h4>
-                                                    <p class="card-text"><span class="badge badge-secondary">ประเภททรัพย์สิน</span> <t t-esc="assets.asset_type.name"/></p>
-                                                    <p class="card-text"><span class="badge badge-secondary">ที่อยู่</span> <t t-esc="assets.asset_address"/></p>
-                                                    <p class="card-text"><span class="badge badge-secondary">เนื้อที่</span> <t t-esc="assets.asset_area"/></p>
+                                                    <p class="card-text"><span class="badge badge-secondary font08rem">ประเภททรัพย์สิน</span> <t t-esc="assets.asset_type.name"/></p>
+                                                    <p class="card-text"><span class="badge badge-secondary font08rem">ที่อยู่</span> <t t-esc="assets.asset_address"/></p>
+                                                    <p class="card-text"><span class="badge badge-secondary font08rem">เนื้อที่</span> <t t-esc="assets.asset_area"/></p>
                                                 </div>
                                             </div>
                                             <div class="row price-row">
                                                 <div class="col price-col">
-                                                    <a t-attf-href="/assets/{{ slug(assets) }}" class="btn btn-primary btn-lg btn-block" style="border-radius: 0rem !important;">ราคาประกาศขายขั้นต่ำ : <t t-esc="'{:,.2f}'.format(assets.asset_price)"/> บาท</a>
+                                                    <a t-attf-href="/assets/{{ slug(assets) }}" class="btn btn-primary btn-lg btn-block" style="border-radius: 0 0 0.25rem 0;">ราคาประกาศขายขั้นต่ำ : <t t-esc="'{:,.2f}'.format(assets.asset_price)"/> บาท</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,16 +265,26 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <h1><span class="badge badge-secondary">รหัสทรัพย์สิน :</span> <t t-esc="assets.asset_code" /></h1>
-                                <p><span class="badge badge-secondary">ประเภททรัพย์สิน :</span> <t t-esc="assets.asset_type.name" /></p>
-                                <p><span class="badge badge-secondary">โฉนดที่ดิน :</span> <span t-foreach="assets.asset_deed_ids" t-as="asset_deed"><t t-esc="asset_deed.name" />, </span></p>
-                                <p><span class="badge badge-secondary">จำนวนเอกสารสิทธิ์ :</span> <t t-esc="assets.asset_total_deed" /></p>
-                                <p><span class="badge badge-secondary">เนื้อที่ :</span> <t t-esc="assets.asset_area" /></p>
-                                <p><span class="badge badge-secondary">ที่ตั้ง :</span> <t t-esc="assets.asset_address" /></p>
-                                <p><span class="badge badge-secondary">เขตพื้นที่ (สี) :</span> <t t-esc="assets.asset_color.name" /></p>
-                                <p><span class="badge badge-secondary">หน้ากว้างติดถนน :</span> <t t-esc="assets.asset_road_frontage" /></p>
+                                <div class="row">
+                                    <div class="col">
+                                    <h1><span class="badge badge-secondary">รหัสทรัพย์สิน :</span> <t t-esc="assets.asset_code" /></h1>
+                                    <p><span class="badge badge-secondary font08rem">ประเภททรัพย์สิน :</span> <t t-esc="assets.asset_type.name" /></p>
+                                    <p><span class="badge badge-secondary font08rem">โฉนดที่ดิน :</span> <span t-foreach="assets.asset_deed_ids" t-as="asset_deed"><t t-esc="asset_deed.name" />, </span></p>
+                                    <p><span class="badge badge-secondary font08rem">จำนวนเอกสารสิทธิ์ :</span> <t t-esc="assets.asset_total_deed" /></p>
+                                    <p><span class="badge badge-secondary font08rem">เนื้อที่ :</span> <t t-esc="assets.asset_area" /></p>
+                                    <p><span class="badge badge-secondary font08rem">ที่ตั้ง :</span> <t t-esc="assets.asset_address" /></p>
+                                    <p><span class="badge badge-secondary font08rem">เขตพื้นที่ (สี) :</span> <t t-esc="assets.asset_color.name" /></p>
+                                    <p><span class="badge badge-secondary font08rem">หน้ากว้างติดถนน :</span> <t t-esc="assets.asset_road_frontage" /></p>
 
-                                <a class="btn btn-success btn-lg btn-block" href="#" role="button">ราคาประกาศขายขั้นต่ำ <t t-esc="'{:,.2f}'.format(assets.asset_price)" /> บาท</a>
+                                    <a class="btn btn-success btn-lg btn-block" href="#" role="button">ราคาประกาศขายขั้นต่ำ <t t-esc="'{:,.2f}'.format(assets.asset_price)" /> บาท</a>
+                                    <a class="btn btn-secondary btn-lg btn-block my-2" href="http://dolwms.dol.go.th/tvwebp/" target="_blank" role="button">ดูรูปแปลงที่ดิน</a>
+                                    </div>
+                                </div>
+                                <div t-if="assets.asset_promo_toggle" class="row">
+                                    <div class="alert alert-primary my-3" role="alert">
+                                        <h5><t t-esc="assets.asset_promo" /></h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row my-3">
@@ -299,6 +327,27 @@
                                 <a class="btn btn-info btn-lg btn-block my-2" t-attf-href="https://www.google.com/maps/place/{{assets.asset_latlong}}/" target="_blank" role="button">เปิดใน Google Maps</a>
                                 <a class="btn btn-secondary btn-lg btn-block my-2" t-attf-href="https://www.google.com/maps/dir/{{assets.asset_latlong}}/" target="_blank" role="button">นำทางบน Google Maps</a>
                             </div>
+                        </div>
+                        <div class="row pt-5">
+                            <h2>ทรัพย์สินใกล้เคียงที่น่าสนใจ</h2>
+                        </div>
+                        <div class="row py-2">
+                            <t t-foreach="recommend_assets" t-as="rec_asset">
+                                <div class="col">
+                                    <div class="card">
+                                        <img class="card-img-top" t-att-src="image_data_uri(rec_asset.asset_image_ids[0].datas)" />
+                                        <div class="card-body">
+                                            <h5 class="card-title"><t t-esc="rec_asset.asset_code" /></h5>
+                                            <p class="card-text"><span class="badge badge-secondary font08rem">ประเภททรัพย์สิน</span> : <t t-esc="rec_asset.asset_type.name" /></p>
+                                            <p class="card-text"><span class="badge badge-secondary font08rem">เนื้อที่</span> : <t t-esc="rec_asset.asset_area" /></p>
+                                            <p class="card-text"><span class="badge badge-secondary font08rem">ที่อยู่</span> : 
+                                            <t t-if="rec_asset.get_district(rec_asset.asset_address) != ''"><t t-esc="rec_asset.get_district(rec_asset.asset_address)[0]" /> <t t-esc="rec_asset.get_district(rec_asset.asset_address)[1]" /></t>
+                                            <t t-if="rec_asset.get_province(rec_asset.asset_address) != ''">จังหวัด <t t-esc="rec_asset.get_province(rec_asset.asset_address)" /></t></p>
+                                        </div>
+                                        <a t-attf-href="/assets/{{ slug(rec_asset) }}" class="btn btn-primary btn-lg btn-block" style="border-radius: 0 0 0.25rem 0.25rem; font-size:1vw; border: 0px;">ราคาประกาศขายขั้นต่ำ : <t t-esc="'{:,.2f}'.format(rec_asset.asset_price)"/> บาท</a>
+                                    </div>
+                                </div>
+                            </t>
                         </div>
                     </div>
                 </div>
@@ -388,10 +437,10 @@
                                       <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                   </form>
                               </div>
-                              <a href="assets/searchbymap" class="btn btn-primary btn-lg btn-block" >ค้นหาด้วยแผนที่</a>
+                              <a href="/assets/searchbymap" class="btn btn-primary btn-lg btn-block" >ค้นหาด้วยแผนที่</a>
                             </div>
                         </div>
-                        <div class="row pt-3 pb-5">
+                        <div class="row pt-3 pb-5" t-if="all_results">
                             <t t-foreach="all_results" t-as="assets">
                                 <div class="col-12 my-3">
                                     <div class="card flex-row flex-wrap assets-item">
@@ -402,9 +451,9 @@
                                             <div class="row p-4">
                                                 <div class="col">
                                                     <h4 class="card-title"><span class="badge badge-secondary">รหัสทรัพย์สิน</span> <t t-esc="assets.asset_code"/></h4>
-                                                    <p class="card-text"><span class="badge badge-secondary">ประเภททรัพย์สิน</span> <t t-esc="assets.asset_type.name"/></p>
-                                                    <p class="card-text"><span class="badge badge-secondary">ที่อยู่</span> <t t-esc="assets.asset_address"/></p>
-                                                    <p class="card-text"><span class="badge badge-secondary">เนื้อที่</span> <t t-esc="assets.asset_area"/></p>
+                                                    <p class="card-text"><span class="badge badge-secondary font08rem">ประเภททรัพย์สิน</span> <t t-esc="assets.asset_type.name"/></p>
+                                                    <p class="card-text"><span class="badge badge-secondary font08rem">ที่อยู่</span> <t t-esc="assets.asset_address"/></p>
+                                                    <p class="card-text"><span class="badge badge-secondary font08rem">เนื้อที่</span> <t t-esc="assets.asset_area"/></p>
                                                 </div>
                                             </div>
                                             <div class="row price-row">
@@ -416,6 +465,9 @@
                                     </div>
                                 </div>
                             </t>
+                        </div>
+                        <div class="row pt-5 pb-5" t-else="">
+                            <h1 class="mx-auto">No result</h1>
                         </div>
                         <script>
                             function getAmphoe() {
