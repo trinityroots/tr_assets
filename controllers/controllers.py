@@ -12,13 +12,16 @@ class Assets(http.Controller):
         '''/assets''',
         '''/assets/page/<int:page>'''
         ], auth='public', website=True)
-    def listing(self, page=0, **kw):
+    def listing(self, page=0, order='', **kw):
         assets_model = http.request.env['trinityroots.assets']
         all_assets = assets_model.search([])
         assets_count = len(all_assets)
-        pager = request.website.pager(url='/assets', total=assets_count, page=page, step=8, scope=7, url_args=kw)
-
-        assets_paged = assets_model.search([], limit=8, offset=pager['offset'])
+        pager = request.website.pager(url='/assets', total=assets_count, page=page, step=8, scope=7, url_args={'order': order})
+        if order != '':
+            order_str = 'asset_price '+order
+            assets_paged = assets_model.search([], order=order_str, limit=8, offset=pager['offset'])
+        else:
+            assets_paged = assets_model.search([], limit=8, offset=pager['offset'])
         return http.request.render('tr_assets.index', {
             'all_province': http.request.env['trinityroots.assets.province'].search([]),
             'all_type': http.request.env['trinityroots.assets.type'].search([]),

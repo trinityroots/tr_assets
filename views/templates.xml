@@ -99,6 +99,20 @@
                               <a href="assets/searchbymap" class="btn btn-primary btn-lg btn-block" >ค้นหาด้วยแผนที่</a>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <form class="form-inline" action="" method="get">
+                                    <label for="order">Sort by price : </label>
+                                    <select name="order" id="order" class="form-control mx-1">
+                                        <option value="asc">A-Z | 0-9</option>
+                                        <option value="desc">Z-A | 9-0</option>
+                                    </select>
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                     
+                                    <button type="submit" class="btn btn-primary btn-xs ml-2">Sort</button>
+                                </form>
+                            </div>
+                        </div>
                         <div class="row pt-3 pb-5">
                             <t t-foreach="all_assets" t-as="assets">
                                 <div class="col-12 my-3">
