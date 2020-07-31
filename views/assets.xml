@@ -79,6 +79,27 @@
         </field>
     </record>
 
+    <!-- trinityroots.assets search view -->
+    <record id="trinityroots_assets_view_search" model="ir.ui.view">
+        <field name="name">trinityroots.assets.view.search</field>
+        <field name="model">trinityroots.assets</field>
+        <field name="arch" type="xml">
+            <search string="Search Description">
+                <!-- Add your fields here -->
+                <field name="asset_code" string="All field"
+                filter_domain="['|', '|', '|', ('asset_code', 'ilike', self), ('asset_type', 'ilike', self), ('asset_address','ilike', self), ('asset_deed_ids', 'ilike', self)]"/>
+                <field name="asset_code" />
+                <field name="asset_type" />
+                <field name="asset_address" />
+                <field name="asset_deed_ids" />
+                <group string="Group By">
+                    <filter name="group_by_type" string="Type"
+                            context="{'group_by': 'asset_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <!-- trinityroots.assets action window -->
     <record id="assets_list_action" model="ir.actions.act_window">
         <field name="name">All Assets List</field>
