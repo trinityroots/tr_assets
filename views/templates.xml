@@ -283,7 +283,17 @@
                                     <div class="col">
                                     <h1><span class="badge badge-secondary">รหัสทรัพย์สิน :</span> <t t-esc="assets.asset_code" /></h1>
                                     <p><span class="badge badge-secondary font08rem">ประเภททรัพย์สิน :</span> <t t-esc="assets.asset_type.name" /></p>
-                                    <p><span class="badge badge-secondary font08rem">โฉนดที่ดิน :</span> <span t-foreach="assets.asset_deed_ids" t-as="asset_deed"><t t-esc="asset_deed.name" />, </span></p>
+                                    <p>
+                                    <span class="badge badge-secondary font08rem">โฉนดที่ดิน :</span>
+                                    <t t-foreach="assets.asset_deed_ids" t-as="asset_deed">
+                                        <t t-if="asset_deed.name == assets.asset_deed_ids[-1].name">
+                                            <t t-esc="asset_deed.name" />
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="asset_deed.name" />, 
+                                        </t>
+                                    </t>
+                                    </p>
                                     <p><span class="badge badge-secondary font08rem">จำนวนเอกสารสิทธิ์ :</span> <t t-esc="assets.asset_total_deed" /></p>
                                     <p><span class="badge badge-secondary font08rem">เนื้อที่ :</span> <t t-esc="assets.asset_area" /></p>
                                     <p><span class="badge badge-secondary font08rem">ที่ตั้ง :</span> <t t-esc="assets.asset_address" /></p>
