@@ -1,4 +1,12 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+pub_access_assets,pub_access_assets,tr_assets.model_trinityroots_assets,base.group_public,1,0,0,0
+pub_access_assets_color,pub_access_assets_color,tr_assets.model_trinityroots_assets_color,base.group_public,1,0,0,0
+pub_access_assets_type,pub_access_assets_type,tr_assets.model_trinityroots_assets_type,base.group_public,1,0,0,0
+pub_access_assets_deed,pub_access_assets_deed,tr_assets.model_trinityroots_assets_deed,base.group_public,1,0,0,0
+pub_access_assets_image,pub_access_assets_image,tr_assets.model_trinityroots_assets_image,base.group_public,1,0,0,0
+pub_access_assets_province,pub_access_assets_province,tr_assets.model_trinityroots_assets_province,base.group_public,1,0,0,0
+pub_access_assets_amphoe,pub_access_assets_amphoe,tr_assets.model_trinityroots_assets_amphoe,base.group_public,1,0,0,0
+
 access_assets,access_assets,tr_assets.model_trinityroots_assets,assets_admin,1,1,1,1
 access_assets_color,access_assets_color,tr_assets.model_trinityroots_assets_color,assets_admin,1,1,1,1
 access_assets_type,access_assets_type,tr_assets.model_trinityroots_assets_type,assets_admin,1,1,1,1
